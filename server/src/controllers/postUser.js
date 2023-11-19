@@ -1,26 +1,17 @@
-const { json } = require("sequelize")
-const {User} =require("../../DB_connection")
+const { User } = require("../DB_connection");
 
-exports.postUsers=async(req,res)=>{
-    const{email, password} =req.body
-
-try {
+const postUser = async (req, res) => {
     
-    if(!email || !password){
-        return res.status(400).json({error:"faltan datos"})
-    }
-    const[user, created] = await User.findOrCreate({
-        where:{email},
-        defaults:{
-            password
+    try {
+        const { email, password } = req.body;
+        if(!email || !password ){
+            return res.status(400).json({message: "Faltan datos"})
         }
-    })
-    if(!created){
-        return res.status(409).json({error:"el email ya esta registrado"})
+        const [user, isCreated] = await User.findOrCreate({ where:{email, password}, defaults:{}})
+        res.status(201).send({user, isCreated})
+    } catch (error) {
+        res.status(500).json({message: error.message})
     }
-    return res.status(200).json(user)
-} catch (error) {
-    res.status(500).json({error:error.message})
 }
 
-}
+module.exports = postUser

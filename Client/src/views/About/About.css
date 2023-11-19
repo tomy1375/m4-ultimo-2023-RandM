@@ -1,0 +1,24 @@
+.card-container {
+    padding: 10px;
+    margin: 10px auto; /* Auto en los lados izquierdo y derecho centra la tarjeta horizontalmente */
+    text-align: center;
+    background-color: #775fccf2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 28px;
+    width: 511px;
+    height: 462px;
+    overflow: hidden;
+  }
+
+.blue-heading {
+    color: #333386;
+  }
+  .flippable-image {
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 1s ease; /* Ajusta la duración y la función de temporización según tus preferencias */
+  }
+  
+  .card-container:hover .flippable-image {
+    transform: rotateY(180deg);
+  }
