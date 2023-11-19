@@ -19,19 +19,26 @@ server.use((req, res, next) => {
  });
 
  server.use(express.json())
- server.use("/rickandmorty", router)// ---->   localhos:3001/rickandmorty/login ..es un prepath //  routes: de esta forma utiliza toda la logica interna de cada una ellas
+ server.use("/rickandmorty", router)// ---->   localhost:3001/rickandmorty/login ..es un prepath //  routes: de esta forma utiliza toda la logica interna de cada una ellas
 
-conn.sync({
-   force:true
-}).then(()=>{
-   server.listen(PORT, () => {
-      console.log('Server raised in port: ' + PORT);
-   });
+// conn.sync({
+//    force:true
+// }).then(()=>{
+//    server.listen(PORT, () => {
+//       console.log('Server raised in port: ' + PORT);
+//    });
 
-}).catch((error)=>console.log(error))
+// }).catch((error)=>console.log(error))
 
-
-// const http = require('http');
+try {
+   server.listen(PORT,async()=>{
+      console.log("server raiser in port:"+PORT)
+      await conn.sync({})
+   })
+} catch (error) {
+   console.log(error)
+}
+// const http = require('http') ;
 // // const characters = require('./utils/data');
 
 // const PORT = 3001;
