@@ -2,6 +2,7 @@ const express = require('express');
 const router = require('./routes')
 const server = express();
 const PORT = 3001;
+const { conn } = require('../DB_connection');
 
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -20,9 +21,14 @@ server.use((req, res, next) => {
  server.use(express.json())
  server.use("/rickandmorty", router)// ---->   localhos:3001/rickandmorty/login ..es un prepath //  routes: de esta forma utiliza toda la logica interna de cada una ellas
 
-server.listen(PORT, () => {
-   console.log('Server raised in port: ' + PORT);
-});
+conn.sync({
+   force:true
+}).then(()=>{
+   server.listen(PORT, () => {
+      console.log('Server raised in port: ' + PORT);
+   });
+
+}).catch((error)=>console.log(error))
 
 
 // const http = require('http');
@@ -59,3 +65,4 @@ server.listen(PORT, () => {
 // });
 
 // server.listen(PORT, () => {console.log(`server levantado en el puerto ${PORT}`)});
+
